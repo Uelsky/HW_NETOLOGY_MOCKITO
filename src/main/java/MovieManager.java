@@ -1,6 +1,7 @@
 public class MovieManager {
     private Movie[] collection = new Movie[0];
-    public int countFindLast;
+    private int countFindLast;
+
 
     public MovieManager(int countFindLast) {
         this.countFindLast = countFindLast;
@@ -10,19 +11,30 @@ public class MovieManager {
         this.countFindLast = 5;
     }
 
-    public void add(Movie item) {
-        Movie[] tmp = new Movie[collection.length + 1];
-        for (int i = 0; i < collection.length; i++) {
-            tmp[i] = collection[i];
-        }
-        tmp[tmp.length - 1] = item;
-        collection = tmp;
+    public int getCountFindLast() {
+        return countFindLast;
+    }
+
+    public void setCountFindLast(int countFindLast) {
+        this.countFindLast = countFindLast;
     }
 
     public Movie[] findAll() {
         return collection;
     }
 
+    public void setCollection(Movie[] collection) {
+        this.collection = collection;
+    }
+
+    public void add(Movie item) {
+        Movie[] tmp = new Movie[this.findAll().length + 1];
+        for (int i = 0; i < this.findAll().length; i++) {
+            tmp[i] = this.findAll()[i];
+        }
+        tmp[tmp.length - 1] = item;
+        this.setCollection(tmp);
+    }
     public Movie[] findLast() {
         if (countFindLast <= collection.length) {
             Movie[] stdout = new Movie[countFindLast];

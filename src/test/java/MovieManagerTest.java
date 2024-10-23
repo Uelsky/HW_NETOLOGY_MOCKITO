@@ -17,30 +17,49 @@ public class MovieManagerTest {
             item5, item6, item7, item8
     };
 
+    MovieManager manager1 = new MovieManager();
+    MovieManager manager2 = new MovieManager(3);
+    MovieManager manager3 = new MovieManager(10);
+
     @Test
-    public void testFunctionalWithEmptyConstructor() {
-        MovieManager manager = new MovieManager();
+    public void testGetCountFindLast() {
 
-        for (Movie item : movielist) {
-            manager.add(item);
-        }
-
-        Assertions.assertEquals(8, manager.findAll().length);
-        Assertions.assertArrayEquals(new Movie[]{
-                item1, item2, item3, item4,
-                item5, item6, item7, item8
-        }, manager.findAll());
-
-        Assertions.assertEquals(5, manager.findLast().length);
-        Assertions.assertArrayEquals(new Movie[]{
-                item8, item7, item6, item5, item4
-        }, manager.findLast());
+        Assertions.assertEquals(5, manager1.getCountFindLast());
+        Assertions.assertEquals(3, manager2.getCountFindLast());
+        Assertions.assertEquals(10, manager3.getCountFindLast());
     }
 
     @Test
-    public void testFunctionalWithParamConstructor() {
-        MovieManager manager1 = new MovieManager(10);
-        MovieManager manager2 = new MovieManager(3);
+    public void testSetCountFindLast() {
+        manager1.setCountFindLast(4);
+        manager2.setCountFindLast(2);
+        manager3.setCountFindLast(9);
+
+        Assertions.assertEquals(4, manager1.getCountFindLast());
+        Assertions.assertEquals(2, manager2.getCountFindLast());
+        Assertions.assertEquals(9, manager3.getCountFindLast());
+    }
+
+    @Test
+    public void testAdd() {
+        Movie item9 = new Movie("Planet of the Apes", 2001, "Tim Burton");
+
+        for (Movie item : movielist) {
+            manager1.add(item);
+        }
+
+        manager1.add(item9);
+
+        Assertions.assertEquals(9, manager1.findAll().length);
+        Assertions.assertArrayEquals(new Movie[]{
+                item1, item2, item3, item4,
+                item5, item6, item7, item8,
+                item9
+        }, manager1.findAll());
+    }
+
+    @Test
+    public void testFindAll() {
 
         for (Movie item : movielist) {
             manager1.add(item);
@@ -50,27 +69,70 @@ public class MovieManagerTest {
             manager2.add(item);
         }
 
+        for (Movie item : movielist) {
+            manager3.add(item);
+        }
+
         Assertions.assertEquals(8, manager1.findAll().length);
         Assertions.assertArrayEquals(new Movie[]{
                 item1, item2, item3, item4,
                 item5, item6, item7, item8
         }, manager1.findAll());
 
-        Assertions.assertEquals(8, manager1.findLast().length);
-        Assertions.assertArrayEquals(new Movie[]{
-                item8, item7, item6, item5,
-                item4, item3, item2, item1
-        }, manager1.findLast());
-
         Assertions.assertEquals(8, manager2.findAll().length);
         Assertions.assertArrayEquals(new Movie[]{
                 item1, item2, item3, item4,
                 item5, item6, item7, item8
-        }, manager2.findAll());
+        }, manager1.findAll());
+
+        Assertions.assertEquals(8, manager3.findAll().length);
+        Assertions.assertArrayEquals(new Movie[]{
+                item1, item2, item3, item4,
+                item5, item6, item7, item8
+        }, manager1.findAll());
+    }
+
+    @Test
+    public void testFindLast() {
+
+        for (Movie item : movielist) {
+            manager1.add(item);
+        }
+
+        for (Movie item : movielist) {
+            manager2.add(item);
+        }
+
+        for (Movie item : movielist) {
+            manager3.add(item);
+        }
+
+        Assertions.assertEquals(5, manager1.findLast().length);
+        Assertions.assertArrayEquals(new Movie[]{
+                item8, item7, item6, item5, item4
+        }, manager1.findLast());
 
         Assertions.assertEquals(3, manager2.findLast().length);
         Assertions.assertArrayEquals(new Movie[]{
                 item8, item7, item6
         }, manager2.findLast());
+
+        Assertions.assertEquals(8, manager3.findLast().length);
+        Assertions.assertArrayEquals(new Movie[]{
+                item8, item7, item6, item5,
+                item4, item3, item2, item1
+        }, manager3.findLast());
+    }
+
+    @Test
+    public void testSetCollection() {
+
+        for (Movie item : movielist) {
+            manager1.add(item);
+        }
+
+        manager1.setCollection(new Movie[0]);
+
+        Assertions.assertEquals(0, manager1.findAll().length);
     }
 }
